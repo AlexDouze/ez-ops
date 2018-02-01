@@ -1,3 +1,5 @@
+# go build Output
+ez-ops
 # Binaries for programs and plugins
 *.exe
 *.dll
