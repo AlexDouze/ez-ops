@@ -25,8 +25,8 @@ import (
 // imageCmd represents the image command
 var imageCmd = &cobra.Command{
 	Use:     "image IMAGE_NAME",
-	Short:   "Build Docker images",
-	Long:    `Build a Docker image from the definition found in the IMAGE_NAME folder`,
+	Short:   "Build docker images",
+	Long:    `Build a docker image from the definition found in the IMAGE_NAME folder`,
 	Aliases: []string{"img", "im", "i"},
 	Args:    cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {

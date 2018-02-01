@@ -25,6 +25,7 @@ import (
 )
 
 var cfgFile string
+var dockerDefinitionPath string
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -46,6 +47,9 @@ func init() {
 	cobra.OnInitialize(initConfig)
 
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.ez-ops.yaml)")
+	rootCmd.PersistentFlags().StringVar(&dockerDefinitionPath, "docker-definition-path", "", "Path for docker definition directories")
+	viper.BindPFlag("docker-definition-path", rootCmd.PersistentFlags().Lookup("docker-definition-path"))
+	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
 
 // initConfig reads in config file and ENV variables if set.
@@ -54,13 +58,11 @@ func initConfig() {
 		// Use config file from the flag.
 		viper.SetConfigFile(cfgFile)
 	} else {
-
-		// Search config in home directory with name ".ez-ops" (without extension).
+		// Search config with name ".ez-ops" (without extension).
+		addConfigPaths()
 		viper.SetConfigName(".ez-ops")
 	}
 
-	addConfigPaths()
-	viper.SetConfigType("yaml")
 	viper.AutomaticEnv() // read in environment variables that match
 
 	// If a config file is found, read it in.
@@ -70,6 +72,7 @@ func initConfig() {
 		fmt.Println(err)
 		os.Exit(1)
 	}
+	fmt.Println(viper.Get("docker-definition-path"))
 }
 
 func addConfigPaths() {
